@@ -1,0 +1,24 @@
+{
+	"name": "hotpotato",
+	"version": "1.0",
+	"sharedassets": "*.*",
+		
+	"depends": 
+	[
+		"base",
+		"citizen",
+		"rust"
+	],
+
+	//
+	// Addons can contain multiple addons, describe them here
+	//
+	"gamemodes":
+	[
+		{
+			"name": "hotpotato",
+			"title": "Hot Potato",
+			"description": "Garry's Mode Too"
+		}
+	]
+}
