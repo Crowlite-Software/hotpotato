@@ -1,10 +1,16 @@
-﻿using Sandbox;
+﻿using HotPotato.Cameras;
+using Sandbox;
 using System;
-
 namespace HotPotato
 {
 	partial class HotPotatoPlayer : BasePlayer
 	{
+		private TimeSince timeSinceDropped;
+		private TimeSince timeSinceJumpReleased;
+
+		private DamageInfo lastDamage;
+
+
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -63,7 +69,36 @@ namespace HotPotato
 				ragdoll.Velocity = EyeRot.Forward * 5000;
 			}
 		}
-		
+
+#region Death Code
+		public override void OnKilled()
+		{
+			base.OnKilled();
+
+			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
+			Camera = new RagdollCamera();
+
+			Controller = null;
+
+			EnableAllCollisions = false;
+			EnableDrawing = false;
+		}
+
+		public override void TakeDamage( DamageInfo info )
+		{
+			lastDamage = info;
+
+			TookDamage( lastDamage.Flags, lastDamage.Position, lastDamage.Force );
+
+			base.TakeDamage( info );
+		}
+
+		[ClientRpc]
+		public void TookDamage( DamageFlags damageFlags, Vector3 forcePos, Vector3 force )
+		{
+		}
+#endregion
+
 		// Remove before release
 		public override bool HasPermission( string mode )
 		{
