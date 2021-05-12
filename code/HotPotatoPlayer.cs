@@ -2,6 +2,7 @@
 using HotPotato.Entities;
 using Sandbox;
 using System;
+
 namespace HotPotato
 {
 	partial class HotPotatoPlayer : BasePlayer
@@ -11,7 +12,7 @@ namespace HotPotato
 
 		private DamageInfo lastDamage;
 
-		public bool PlayerHasBall = true;
+		private bool PlayerHasPotato;
 
 		public override void Respawn()
 		{
@@ -36,6 +37,7 @@ namespace HotPotato
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
+			PlayerHasPotato = true;
 
 			base.Respawn();
 		}
@@ -62,14 +64,24 @@ namespace HotPotato
 			//
 			// Shoot a ball when Mouse1 is pressed.
 			//
-			if ( IsServer && Input.Pressed( InputButton.Attack1 ) )
+			if ( IsServer && Input.Pressed( InputButton.Attack1 ) && PlayerHasPotato )
 			{
-				Log.Info(PlayerHasBall.ToString());
-				var ragdoll = new BallEntity();
-				//ragdoll.SetModel( "models/citizen/citizen.vmdl" );
-				ragdoll.WorldPos = EyePos + EyeRot.Forward * 20;
-				//ragdoll.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
-				ragdoll.Velocity = EyeRot.Forward * 1000;
+				var potato = new BallEntity();
+				potato.WorldPos = EyePos + EyeRot.Forward * 50;
+				potato.Velocity = EyeRot.Forward * 1000;
+				PlayerHasPotato = false; // We threw the potato, so we don't have it anymore.
+			}
+		}
+
+		// Pick the potato back up.
+		public override void StartTouch( Entity other )
+		{
+			if ( IsClient ) return;
+
+			if ( other is BallEntity && !PlayerHasPotato ) // Don't pick up it up if we already have one.
+			{
+				PlayerHasPotato = true; // We picked the potato up.
+				other.Delete();
 			}
 		}
 
