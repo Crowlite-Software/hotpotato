@@ -1,4 +1,5 @@
 ﻿using HotPotato.Cameras;
+using HotPotato.Entities;
 using Sandbox;
 using System;
 namespace HotPotato
@@ -10,6 +11,7 @@ namespace HotPotato
 
 		private DamageInfo lastDamage;
 
+		public bool PlayerHasBall = true;
 
 		public override void Respawn()
 		{
@@ -58,15 +60,16 @@ namespace HotPotato
 			}
 
 			//
-			// If we're running serverside and Attack1 was just pressed, spawn a ragdoll
+			// Shoot a ball when Mouse1 is pressed.
 			//
 			if ( IsServer && Input.Pressed( InputButton.Attack1 ) )
 			{
-				var ragdoll = new ModelEntity();
-				ragdoll.SetModel( "models/citizen/citizen.vmdl" );
+				Log.Info(PlayerHasBall.ToString());
+				var ragdoll = new BallEntity();
+				//ragdoll.SetModel( "models/citizen/citizen.vmdl" );
 				ragdoll.WorldPos = EyePos + EyeRot.Forward * 20;
-				ragdoll.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
-				ragdoll.Velocity = EyeRot.Forward * 5000;
+				//ragdoll.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
+				ragdoll.Velocity = EyeRot.Forward * 1000;
 			}
 		}
 
