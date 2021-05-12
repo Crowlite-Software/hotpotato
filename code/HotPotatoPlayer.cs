@@ -63,6 +63,8 @@ namespace HotPotato
 				ragdoll.Velocity = EyeRot.Forward * 5000;
 			}
 		}
+		
+		// Remove before release
 		public override bool HasPermission( string mode )
 		{
 			if ( mode == "noclip" ) return true;
