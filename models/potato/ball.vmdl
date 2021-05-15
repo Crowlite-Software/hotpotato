@@ -44,7 +44,7 @@
 						_class = "RenderPrimitiveSphere"
 						name = "ball"
 						parent_bone = ""
-						material_name = "materials/shiny_white.vmat"
+						material_name = "materials/dev/reflectivity_50b.vmat"
 						origin = [ 0.0, 0.0, 0.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						max_u = 1.0
