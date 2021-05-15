@@ -14,7 +14,7 @@ namespace HotPotato.Entities
         {
             base.Spawn();
 
-            SetModel( "models/ball/ball.vmdl" );
+            SetModel( "models/potato/ball.vmdl" );
             SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
             WorldScale = 1;
             RenderColor = Color.Random.ToColor32();
