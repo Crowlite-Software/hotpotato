@@ -3,7 +3,7 @@ using Sandbox.UI;
 
 namespace HotPotato
 {
-	partial class HotPotatoHud : Hud
+	partial class HotPotatoHud : HudEntity<RootPanel>
 	{
 		public HotPotatoHud()
 		{

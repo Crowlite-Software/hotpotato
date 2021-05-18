@@ -3,7 +3,7 @@ using System;
 
 namespace HotPotato
 {
-	[Library("hotpotato")]
+	[Library( "hotpotato" )]
 	partial class HotPotatoGame : Game
 	{
 		public HotPotatoGame()
@@ -12,9 +12,14 @@ namespace HotPotato
 				new HotPotatoHud();
 		}
 
-		public override Player CreatePlayer()
+		public override void ClientJoined( Client cl )
 		{
-			return new HotPotatoPlayer();
+			base.ClientJoined( cl );
+
+			var player = new HotPotatoPlayer();
+			cl.Pawn = player;
+
+			player.Respawn();
 		}
 	}
 }
