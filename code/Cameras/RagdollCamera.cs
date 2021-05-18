@@ -71,9 +71,9 @@ namespace HotPotato.Cameras
 				return CurrentView.Position;
 
 			if ( !player.Corpse.IsValid() || player.Corpse is not ModelEntity corpse )
-				return player.GetBoneTransform( player.GetBoneIndex( "spine2" ) ).Pos;
+				return player.GetBoneTransform( player.GetBoneIndex( "spine2" ) ).Position;
 
-			return corpse.GetBoneTransform( corpse.GetBoneIndex( "spine2" ) ).Pos;
+			return corpse.GetBoneTransform( corpse.GetBoneIndex( "spine2" ) ).Position;
 		}
 
 		public virtual Vector3 GetViewOffset()
